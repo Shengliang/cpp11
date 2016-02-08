@@ -2,6 +2,30 @@
 #include <iostream>
 #include <memory>
 
+
+class mmap_deleter {
+public:
+  mmap_deleter() {}
+  template <class T>
+  void operator()(T* p) {
+    std::cout << __FUNCTION__ << std::endl;
+    delete p;
+  }
+};
+
+
+class state_deleter {  // a deleter class with state
+  int count_;
+public:
+  state_deleter() : count_(0) {}
+  template <class T>
+  void operator()(T* p) {
+    std::cout << "[deleted #" << ++count_ << "]\n";
+    delete p;
+  }
+};
+
+
 struct Vec3
 {
     int x, y, z;
@@ -27,5 +51,12 @@ int main()
     for (int i = 0; i < 5; i++) {
         std::cout << "     " << v3[i] << '\n';
     }
+
+    std::cout << "use deleter" << std::endl;
+    std::unique_ptr<int,mmap_deleter>  myptr;
+    myptr = std::make_unique<int, mmap_deleter>();
+    std::cout << *mytr << std::endl;
+    *myptr = 5;
+
     return 0;
 }
