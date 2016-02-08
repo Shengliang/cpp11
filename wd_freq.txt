@@ -1,0 +1,9 @@
+12 Hi
+7  Hash
+7  C++
+9  Superuser
+17 Stackoverflow
+9  LaTeX
+42 Life
+9  Ubuntu
+
